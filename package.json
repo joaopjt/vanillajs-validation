@@ -1,9 +1,9 @@
 {
-  "name": "webpack-nunjucks-boilerplate",
-  "version": "1.0.0",
-  "description": "webpack boilerplate with scss, js, and nunjucks.",
+  "name": "vanilla-validation",
+  "version": "0.1.0",
+  "description": "vanilla js form validation solution.",
   "main": "index.js",
-  "repository": "git@github.com:joaopjt/webpack-nunjucks-boilerplate.git",
+  "repository": "https://github.com/joaopjt/vanilla-validation.git",
   "author": "João Julio <joaopjt@gmail.com>",
   "license": "MIT",
   "scripts": {
