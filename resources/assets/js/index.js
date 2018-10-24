@@ -11,6 +11,7 @@ class Form {
     this.errorList = [];
     this.errorClass = (options.errorClass) ? options.errorClass : 'invalid';
     this.messages = (options.messages) ? options.messages : {};
+    this.onfocusout = (options.onfocusout) ? options.onfocusout : null;
     this.errorPlacement = (options.errorPlacement) ? options.errorPlacement : null;
     this.submitHandler = (options.submitHandler) ? options.submitHandler : null;
     this.invalidHandler = (options.invalidHandler) ? options.invalidHandler : null;
@@ -182,6 +183,50 @@ class Form {
   }
 
   /**
+   * @param  {Object} el [Element data object in formInputs array]
+   * @param  {Integer} index [Index of element in formInputs array]
+   * @return {Object} [Return data object with updated data]
+   */
+  validateInput(el, index) {
+    let input = el;
+    
+    if (!typeof el === "object" && !index) {
+      let ind = _.findIndex(this.formInputs, { el });
+      input = this.formInputs[ind];
+      index = ind;
+    }
+
+
+    Object.entries(input.rules).forEach((r) => { // Run at rules Object
+      let errorInList = _.findIndex(this.errorList, { el: input.el, rule: r[0], inputIndex: index });
+      let errorInInput = _.findIndex(this.errorList, { el: input.el, inputIndex: index });
+
+      if(!this.validateValue(input.el.value, r[0], r[1])) {  // Make the validation
+        if(errorInList < 0) {
+          input.valid = false;
+          
+          this.errorList.push({
+            el: input.el,
+            rule: r[0],
+            required: r[1],
+            inputIndex: index
+          });
+        }
+      } else {
+        if (errorInList >= 0) {
+          this.clearError(index, r[0])
+        }
+
+        if (errorInInput < 0) {
+          input.valid = true;
+        }
+      }
+    });
+
+    return input;
+  }
+
+  /**
    * @param  {[string, integer, boolean]} v [Input value]
    * @param  {[string]} r [Rule name]
    * @param  {[string, integer]} rv [Rule param value]
@@ -192,37 +237,7 @@ class Form {
   }
 
   validate() {
-    this.formInputs = this.formInputs.map((i, index) => {
-      let input = i;
-
-      Object.entries(i.rules).forEach((r) => { // Run at rules Object
-        let errorInList = _.findIndex(this.errorList, { el: i.el, rule: r[0], inputIndex: index });
-        let errorInInput = _.findIndex(this.errorList, { el: i.el, inputIndex: index });
-
-        if(!this.validateValue(i.el.value, r[0], r[1])) {  // Make the validation
-          if(errorInList < 0) {
-            input.valid = false;
-            
-            this.errorList.push({
-              el: i.el,
-              rule: r[0],
-              required: r[1],
-              inputIndex: index
-            });
-          }
-        } else {
-          if (errorInList >= 0) {
-            this.clearError(index, r[0])
-          }
-
-          if (errorInInput < 0) {
-            input.valid = true;
-          }
-        }
-      });
-
-      return input;
-    });
+    this.formInputs = this.formInputs.map(this.validateInput.bind(this));
 
 
     if (this.errorList.length > 0) {
@@ -237,8 +252,20 @@ class Form {
     }
   }
 
+  setupListeners(evt) {
+    Array.from(this.form.querySelectorAll('[data-field-holder]')).forEach((h) => {
+      const el = h.querySelector('input:not([disabled])');
+
+      el.addEventListener(evt, this.validateInput.bind(this, el));
+    });
+  }
+
   setup() {
     this.form.addEventListener('submit', this.onSubmit.bind(this));
+
+    if (this.onfocusout) {
+      this.setupListeners('focusout');
+    }
   }
 }
 
@@ -249,3 +276,12 @@ export default {
     return instance;
   }
 }
+
+var i = new Form(document.querySelector('[data-form]'), {
+  rules: {
+    nome: "required"
+  },
+  onfocusout: true
+});
+
+console.log(i);
