@@ -35,7 +35,6 @@ const pages = glob.sync('**/*.njk', {
 module.exports = {
   entry: {
     app: [
-      'babel-polyfill',
       './resources/assets/js/index.js',
       './resources/assets/scss/main.scss'
     ]

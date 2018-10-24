@@ -2,7 +2,6 @@
 import _ from 'underscore';
 import defaultMessages from './default-messages';
 import validationRules from './validation-rules'
-// const defaultMessages = [];
 
 class Form {
   constructor(form, options) {
@@ -71,15 +70,15 @@ class Form {
     let error = { rule: err.rule };
 
     if (typeof defaultMessages[err.rule] === "function") {
-      err.message = defaultMessages[err.rule](err.required);
+      error.message = defaultMessages[err.rule](err.required);
     } else {
-      err.message = defaultMessages[err.rule];
+      error.message = defaultMessages[err.rule];
     }
     
     if (this.messages) {
       if (this.messages[err.el.name]) {
         if (this.messages[err.el.name][err.rule]) {
-          err.message = this.messages[err.el.name][err.rule];
+          error.message = this.messages[err.el.name][err.rule];
         }
       }
     }
@@ -90,12 +89,14 @@ class Form {
   listInputs() {
     const self = this;
 
-    Array.from(this.form.querySelectorAll('input')).forEach((el) => {
-      if (this.rules[el.name]) {
+    Array.from(this.form.querySelectorAll('[data-field-holder]')).forEach((h) => {
+      const el = h.querySelector('input:not([disabled])');
+
+      if (el && this.rules[el.name]) {
         let inputInfo = {
           el,
-          errField: el.parentElement.querySelector('[data-input-error]'),
-          holder: el.parentElement,
+          errField: h.querySelector('[data-field-error]'),
+          holder: h,
           rules: (self.rules[el.name] === "required") ? {required: true} : self.rules[el.name],
           valid: null
         };
@@ -149,6 +150,8 @@ class Form {
     e.preventDefault();
 
     if (this.validate().hasError) {
+      if (this.invalidHandler) this.invalidHandler.call(this, this);
+
       this.mapErrors();
     } else {
       if (this.submitHandler) {
@@ -179,31 +182,28 @@ class Form {
   }
 
   /**
-   * @param  {[string, integer, boolean]} v [Value to validate]
+   * @param  {[string, integer, boolean]} v [Input value]
    * @param  {[string]} r [Rule name]
-   * @param  {[string, integer]} rv [Rule param if exist]
+   * @param  {[string, integer]} rv [Rule param value]
    * @return {boolean}
    */
   validateValue(v, r, rv) {
-    return validationRules[r](v, rv);
+    return validationRules[r].call(this, v, rv);
   }
 
   validate() {
-    const self = this;
-
-    
     this.formInputs = this.formInputs.map((i, index) => {
       let input = i;
 
-      Object.entries(i.rules).forEach((r) => {             // Run rules Object
-        let errorInList = _.findIndex(self.errorList, { el: i.el, rule: r[0], inputIndex: index });
-        let errorInInput = _.findIndex(self.errorList, { el: i.el, inputIndex: index });
+      Object.entries(i.rules).forEach((r) => { // Run at rules Object
+        let errorInList = _.findIndex(this.errorList, { el: i.el, rule: r[0], inputIndex: index });
+        let errorInInput = _.findIndex(this.errorList, { el: i.el, inputIndex: index });
 
-        if(!self.validateValue(i.el.value, r[0], r[1])) {  // Make rule validation in value
+        if(!this.validateValue(i.el.value, r[0], r[1])) {  // Make the validation
           if(errorInList < 0) {
             input.valid = false;
             
-            self.errorList.push({
+            this.errorList.push({
               el: i.el,
               rule: r[0],
               required: r[1],
@@ -212,7 +212,7 @@ class Form {
           }
         } else {
           if (errorInList >= 0) {
-            self.clearError(index, r[0])
+            this.clearError(index, r[0])
           }
 
           if (errorInInput < 0) {
@@ -242,41 +242,10 @@ class Form {
   }
 }
 
-let el = document.querySelector('[data-form]');
+export default {
+  create(el, opts) {
+    let instance = new Form(el, opts);
 
-window.validator = new Form(el, {
-  errorClass: 'is-invalid',
-  rules: {
-    nome: "required",
-    rua: {
-      required: true,
-      minlenght: 2
-    },
-    cpf: {
-      cpf: true,
-      digits: true,
-      required: true
-    },
-    cep: {
-      cep: true,
-      required: true
-    }
-  },
-  messages: {
-    nome: {
-      required: 'O campo nome é obrigatório!',
-    },
-    rua: {
-      minlength: 'O campo rua deve ter pelo menos 2 letras!',
-      required: 'O campo rua é obrigatório!',
-    }
-  },
-  errorPlacement: function(error, element) {
-    console.log(`Error:`);
-    console.log(error);
-    console.log(element);
-  },
-  submitHandler: function(form) {
-    console.log(form);
+    return instance;
   }
-});
+}
