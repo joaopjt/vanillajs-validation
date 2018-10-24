@@ -1,8 +1,8 @@
-# webpack-boilerplate (NUNJUCKS VERSION)
+# Vanilla Validation
 
-Webpack boilerplate with SCSS, Babel for JS (es2015), and nunjucks.
+Inspired in [Jquery Validation]{https://jqueryvalidation.org}
 
-## Get starting with
+## Running library dev
 
 Make sure of use node `v6.11.4`. Then, install the cross-env, webpack and webpack-dev-server cli`s running the follow lines in your bash:
 
@@ -12,9 +12,13 @@ Make sure of use node `v6.11.4`. Then, install the cross-env, webpack and webpac
   npm install webpack-dev-server -g
 ```
 
-After, install the dependencies and run the project. For exemple:
+After that, install the dependencies and run the project. Exemple:
 
 ```bash
   npm install
   npm run watch
 ```
+
+## License
+
+Licensed under MIT License.
