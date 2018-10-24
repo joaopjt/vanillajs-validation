@@ -1,6 +1,6 @@
 # Vanilla Validation
 
-Inspired in [Jquery Validation]{https://jqueryvalidation.org}
+Inspired in [Jquery Validation](https://jqueryvalidation.org)
 
 ## Running library dev
 
@@ -21,4 +21,4 @@ After that, install the dependencies and run the project. Exemple:
 
 ## License
 
-Licensed under MIT License.
+Licensed under [MIT License](https://opensource.org/licenses/MIT).
