@@ -10,6 +10,7 @@ class Form {
     this.formInputs = [];
     this.rules = (options.rules) ? options.rules : {};
     this.errorList = [];
+    this.errorClass = (options.errorClass) ? options.errorClass : 'invalid';
     this.messages = (options.messages) ? options.messages : {};
     this.errorPlacement = (options.errorPlacement) ? options.errorPlacement : null;
     this.submitHandler = (options.submitHandler) ? options.submitHandler : null;
@@ -27,8 +28,8 @@ class Form {
    * @param {Node}
    */
   addErrorClass(holder) {
-    if (!holder.classList.contains('invalid')) {
-      holder.classList.add('invalid');
+    if (!holder.classList.contains(this.errorClass)) {
+      holder.classList.add(this.errorClass);
     }
   }
 
@@ -162,8 +163,8 @@ class Form {
    * @param  {Node}
    */
   removeErrorClass(elHolder) {
-    if (elHolder.classList.contains('invalid')) {
-      elHolder.classList.remove('invalid');
+    if (elHolder.classList.contains(this.errorClass)) {
+      elHolder.classList.remove(this.errorClass);
     }
   }
 
@@ -244,6 +245,7 @@ class Form {
 let el = document.querySelector('[data-form]');
 
 window.validator = new Form(el, {
+  errorClass: 'is-invalid',
   rules: {
     nome: "required",
     rua: {
