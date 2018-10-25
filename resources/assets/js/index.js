@@ -150,11 +150,7 @@ class Form {
   onSubmit(e) {
     e.preventDefault();
 
-    if (this.validate().hasError) {
-      if (this.invalidHandler) this.invalidHandler.call(this, this);
-
-      this.mapErrors();
-    } else {
+    if (!this.validate().hasError) {
       if (this.submitHandler) {
         this.submitHandler.call(this, this.form);
       } else {
@@ -187,15 +183,15 @@ class Form {
    * @param  {Integer} index [Index of element in formInputs array]
    * @return {Object} [Return data object with updated data]
    */
-  validateInput(el, index) {
+  validateInput(el, index, cb) {
     let input = el;
-    
-    if (!typeof el === "object" && !index) {
-      let ind = _.findIndex(this.formInputs, { el });
+
+    if (!index && typeof index !== "number") {
+      let ind = _.findIndex(this.formInputs, { el: input });
+
       input = this.formInputs[ind];
       index = ind;
     }
-
 
     Object.entries(input.rules).forEach((r) => { // Run at rules Object
       let errorInList = _.findIndex(this.errorList, { el: input.el, rule: r[0], inputIndex: index });
@@ -211,6 +207,8 @@ class Form {
             required: r[1],
             inputIndex: index
           });
+
+          if (this.invalidHandler) this.invalidHandler.call(this, this);
         }
       } else {
         if (errorInList >= 0) {
@@ -221,7 +219,11 @@ class Form {
           input.valid = true;
         }
       }
+
+      
     });
+
+    if (typeof cb === "function") cb();
 
     return input;
   }
@@ -239,8 +241,9 @@ class Form {
   validate() {
     this.formInputs = this.formInputs.map(this.validateInput.bind(this));
 
-
     if (this.errorList.length > 0) {
+      this.mapErrors()
+
       return {
         hasError: true,
         errorCount: this.errorList.length
@@ -253,10 +256,19 @@ class Form {
   }
 
   setupListeners(evt) {
+    const self = this;
+
     Array.from(this.form.querySelectorAll('[data-field-holder]')).forEach((h) => {
       const el = h.querySelector('input:not([disabled])');
+      let mapped = _.findIndex(this.formInputs, { el });
 
-      el.addEventListener(evt, this.validateInput.bind(this, el));
+      if (mapped >= 0) {
+        el.addEventListener(evt, self.validateInput.bind(self, el, null, function() {
+          if (self.errorList.length > 0) {
+            self.mapErrors();
+          }
+        }));
+      }
     });
   }
 
@@ -277,11 +289,9 @@ export default {
   }
 }
 
-var i = new Form(document.querySelector('[data-form]'), {
+window.validator = new Form(document.querySelector('[data-form]'), {
   rules: {
     nome: "required"
   },
   onfocusout: true
 });
-
-console.log(i);
