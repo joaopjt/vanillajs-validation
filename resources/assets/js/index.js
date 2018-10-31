@@ -2,7 +2,7 @@ import _ from 'underscore';
 import defaultMessages from './default-messages';
 import validationRules from './validation-rules';
 
-export default class Form {
+export default class VanillaValidator {
   constructor(form, options) {
     this.form = form;
     this.formInputs = [];
