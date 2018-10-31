@@ -41,14 +41,14 @@ export default {
 
     return false;
   },
-  minlenght(v, r) {
+  minlength(v, r) {
     if (r >= 1 && v.length >= r) {
       return true;
     }
 
     return false;
   },
-  maxlenght(v, r) {
+  maxlength(v, r) {
     if (r >= 1 && v.length <= r) {
       return true;
     }

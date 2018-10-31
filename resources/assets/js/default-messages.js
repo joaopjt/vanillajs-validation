@@ -4,10 +4,10 @@ export default {
   cpf: 'CPF inválido.',
   email: 'Email inválido.',
   required: 'Campo obrigatório.',
-  minlenght(n) {
+  minlength(n) {
     return 'O campo deve ter no minimo ' + n + ' caracteres';
   },
-  maxlenght(n) {
+  maxlength(n) {
     return 'O campo deve ter no máximo ' + n + ' caracteres';
   },
 };
