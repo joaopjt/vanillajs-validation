@@ -1,10 +1,10 @@
 {
   "name": "vanilla-validation",
-  "version": "0.1.0",
-  "description": "vanilla js form validation solution.",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Vanilla JS Form validation solution.",
+  "main": "dist/assets/js/bundle.js",
   "repository": "https://github.com/joaopjt/vanilla-validation.git",
-  "author": "João Julio <joaopjt@gmail.com>",
+  "author": "João Julio",
   "license": "MIT",
   "scripts": {
     "watch": "cross-env NODE_ENV=development webpack-dev-server --colors --inline --hot",

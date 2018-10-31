@@ -35,7 +35,7 @@ const pages = glob.sync('**/*.njk', {
 module.exports = {
   entry: {
     app: [
-      './resources/assets/js/index.js',
+      './resources/assets/js/module.js',
       './resources/assets/scss/main.scss'
     ]
   },
