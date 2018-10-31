@@ -1,6 +1,6 @@
 {
   "name": "vanillajs-validation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vanilla JS Form validation solution.",
   "main": "resources/assets/js/index.js",
   "repository": "https://github.com/joaopjt/vanilla-validation.git",
