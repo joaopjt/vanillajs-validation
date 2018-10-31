@@ -2,7 +2,7 @@
   "name": "vanillajs-validation",
   "version": "1.0.1",
   "description": "Vanilla JS Form validation solution.",
-  "main": "dist/assets/js/bundle.js",
+  "main": "resources/assets/js/index.js",
   "repository": "https://github.com/joaopjt/vanilla-validation.git",
   "author": "João Julio",
   "license": "MIT",
