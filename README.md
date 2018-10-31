@@ -1,6 +1,7 @@
 # Vanilla Validation
 
 A lightweight version of  [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
+
 ⚡️ 26kb only
 
 ## Getting Started
@@ -18,31 +19,31 @@ npm install vanillajs-validation
 ### Creating instance
 ```html
 <form data-form>
-	<input name="testfield" />
-	<input name="cpf" />
+  <input name="testfield" />
+  <input name="cpf" />
 </form>
 
 <script src="vanillajs-validator.js"></script> // Import downloaded script file
 <script type="text/javascript">
-	var form = document.querySelector('[data-form]');
-	var v = new vanillaValidation(form, {
-		rules: {
-			testfield: {
-				minlength: 2,
-				required: true
-			},
-			cpf: {
-				cpf: true,
-				required: true
-			}
-		},
-		messages: {
-			testfield: {
-				minlength: 'O campo precisa de pelo menos 2 caracteres',
-				required: 'Campo teste obrigatorio!'
-			}
-		}
-	});
+var form = document.querySelector('[data-form]');
+var v = new vanillaValidation(form, {
+  rules: {
+    testfield: {
+      minlength: 2,
+      required: true
+    },
+    cpf: {
+      cpf: true,
+      required: true
+    }
+  },
+  messages: {
+    testfield: {
+      minlength: 'O campo precisa de pelo menos 2 caracteres',
+      required: 'Campo teste obrigatorio!'
+    }
+  }
+});
 </script>
 ```
 
@@ -53,9 +54,9 @@ You can import the module with ES6 syntax too:
 import Validator from 'vanillajs-validation';
 
 const formValidation = new Validator(document.querySelector('[data-form]', {
-	rules: {
-		...
-	}
+  rules: {
+    ...
+  }
 });
 ```
 ---
@@ -64,9 +65,9 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 The rules should be an **object** passed by in ``options`` at the follow format:
 ```json
 rules: {
-	fieldName: {
-		ruleName: value
-	}
+  fieldName: {
+    ruleName: value
+  }
 }
 ```
 
@@ -77,11 +78,11 @@ The default rules avaiable are:
 |`cpf`           |**boolean**                    | [BR] CPF number
 |`cnpj`          |**boolean**                    | [BR] CNPJ  number
 |`email`         |**boolean**                    | Verify email format
-|`equalTo`       |**string**					 | A input selector string
-|`digits`        |**boolean**					 | Only numbers
-|`maxlength`     |**integer**					 | Max value length
-|`minlength`     |**integer**					 | Min value length
-|`required`      |**boolean**					 | Not empty value
+|`equalTo`       |**string**			 | A input selector string
+|`digits`        |**boolean**			 | Only numbers
+|`maxlength`     |**integer**			 | Max value length
+|`minlength`     |**integer**			 | Min value length
+|`required`      |**boolean**			 | Not empty value
 
 ---
 
@@ -90,9 +91,9 @@ Adding a ``messages`` **object** in ``options`` at the follow format:
 
 ```json
 messages: {
-	fieldName: {
-		ruleName: 'errorMessage goes here'
-	}
+  fieldName: {
+    ruleName: 'errorMessage goes here'
+  }
 }
 ```
 
