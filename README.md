@@ -63,7 +63,7 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 ### Rules
 
 The rules should be an **object** passed by in ``options`` at the follow format:
-```json
+```javascript
 rules: {
   fieldName: {
     ruleName: value
@@ -89,7 +89,7 @@ The default rules avaiable are:
 ### Custom Error Messages
 Adding a ``messages`` **object** in ``options`` at the follow format:
 
-```json
+```javascript
 messages: {
   fieldName: {
     ruleName: 'errorMessage goes here'
