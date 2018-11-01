@@ -19,9 +19,16 @@ npm install vanillajs-validation
 ### Creating instance
 ```html
 <form data-form>
-  <input name="testfield" />
-  <input name="cpf" />
+  <div data-field-holder>
+	<input name="testfield" />
+	<span data-field-error></span>
+  </div>
+  <div data-input-holder>
+    <input name="cpf" />
+    <span data-field-error></span>
+  </div>
 </form>
+
 
 <script src="vanillajs-validator.js"></script> // Import downloaded script file
 <script type="text/javascript">
