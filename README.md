@@ -1,3 +1,4 @@
+
 # Vanilla Validation
 
 A lightweight version of  [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
@@ -79,17 +80,18 @@ rules: {
 ```
 
 The default rules avaiable are:
-|Rule Name       |Value Type                     |Description     |
-|----------------|-------------------------------|----------------|
+
+|Rule Name       |Value Type                     |Description              |
+|----------------|-------------------------------|-------------------------|
 |`cep`           |**boolean**                    | [BR] postal code format |
-|`cpf`           |**boolean**                    | [BR] CPF number |
-|`cnpj`          |**boolean**                    | [BR] CNPJ  number |
-|`email`         |**boolean**                    | Verify email format | 
-|`equalTo`       |**string**			 | A input selector string |
-|`digits`        |**boolean**			 | Only numbers |
-|`maxlength`     |**integer**			 | Max value length |
-|`minlength`     |**integer**			 | Min value length |
-|`required`      |**boolean**			 | Not empty value |
+|`cpf`           |**boolean**                    | [BR] CPF number         |
+|`cnpj`          |**boolean**                    | [BR] CNPJ  number       |
+|`email`         |**boolean**                    | Verify email format     | 
+|`equalTo`       |**string**			         | A input selector string |
+|`digits`        |**boolean**			         | Only numbers            |
+|`maxlength`     |**integer**			         | Max value length        |
+|`minlength`     |**integer**			         | Min value length        |
+|`required`      |**boolean**			         | Not empty value         |
 
 ---
 
