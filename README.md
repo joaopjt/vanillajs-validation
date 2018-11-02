@@ -1,13 +1,13 @@
 
 # Vanilla Validation
 
-A lightweight version of  [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
+A lightweight validation form inspired in [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
 
-⚡️ 26kb only
+⚡️ ~ 24kb in browser only. As a project dependency, it falls to 6kb only.
 
 ## Getting Started
 
-**Download** the script file clicking [here](http://github.com/joaopjt/vanillajs-validation/blob/master/dist/assets/js/bundle.js)
+**Download** the script file clicking [here](http://github.com/joaopjt/vanillajs-validation/blob/master/dist/vanillajs-validation.min.js)
 
 OR
 
@@ -21,8 +21,8 @@ npm install vanillajs-validation
 ```html
 <form data-form>
   <div data-field-holder>
-	<input name="testfield" />
-	<span data-field-error></span>
+	  <input name="testfield" />
+	  <span data-field-error></span>
   </div>
   <div data-input-holder>
     <input name="cpf" />
@@ -31,7 +31,7 @@ npm install vanillajs-validation
 </form>
 
 
-<script src="vanillajs-validator.js"></script> // Import downloaded script file
+<script src="vanillajs-validation.min.js"></script> // Import downloaded script file
 <script type="text/javascript">
 var form = document.querySelector('[data-form]');
 var v = new vanillaValidation(form, {
@@ -86,7 +86,7 @@ The default rules avaiable are:
 |`cep`           |**boolean**                    | [BR] postal code format |
 |`cpf`           |**boolean**                    | [BR] CPF number         |
 |`cnpj`          |**boolean**                    | [BR] CNPJ  number       |
-|`email`         |**boolean**                    | Verify email format     | 
+|`email`         |**boolean**                    | Verify email format     |
 |`equalTo`       |**string**			         | A input selector string |
 |`digits`        |**boolean**			         | Only numbers            |
 |`maxlength`     |**integer**			         | Max value length        |
@@ -122,23 +122,12 @@ messages: {
 
 ## Contribute
 
-In first of all, fork the repo. 
+In first of all, fork the repo.
 
-After clone the fork, make sure of use node `v6.11.4`. Then, install the cross-env, webpack and webpack-dev-server cli`s running the follow lines in your bash:
+After clone the fork, make sure of use node `v6.11.4`. Install the dependencies, and **rollup** globally.
+To build files, use the `rollup -c`.
 
-```bash
-  npm install cross-env -g
-  npm install webpack -g
-  npm install webpack-dev-server -g
-```
-
-After that, install the dependencies and run the project. Exemple:
-
-```bash
-  npm install
-  npm run watch
-```
-Then, make a pull request with a nice description with the changes.
+Then, make a pull request with a nice description of changes.
 
 ## License
 
@@ -146,3 +135,5 @@ Then, make a pull request with a nice description with the changes.
 
 ## Made with ❤️ by
 - [João Julio](http://github.com/joaopjt)
+
+> be a part of this list too, contribute with us :)
