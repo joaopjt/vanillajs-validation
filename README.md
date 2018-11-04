@@ -21,8 +21,8 @@ npm install vanillajs-validation
 ```html
 <form data-form>
   <div data-field-holder>
-	  <input name="testfield" />
-	  <span data-field-error></span>
+    <input name="testfield" />
+    <span data-field-error></span>
   </div>
   <div data-input-holder>
     <input name="cpf" />
@@ -68,7 +68,7 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 });
 ```
 ---
-### Rules
+### Rules (required)
 
 The rules should be an **object** passed by in ``options`` at the follow format:
 ```javascript
@@ -87,11 +87,11 @@ The default rules avaiable are:
 |`cpf`           |**boolean**                    | [BR] CPF number         |
 |`cnpj`          |**boolean**                    | [BR] CNPJ  number       |
 |`email`         |**boolean**                    | Verify email format     |
-|`equalTo`       |**string**			         | A input selector string |
-|`digits`        |**boolean**			         | Only numbers            |
-|`maxlength`     |**integer**			         | Max value length        |
-|`minlength`     |**integer**			         | Min value length        |
-|`required`      |**boolean**			         | Not empty value         |
+|`equalTo`       |**string**               | A input selector string |
+|`digits`        |**boolean**              | Only numbers            |
+|`maxlength`     |**integer**              | Max value length        |
+|`minlength`     |**integer**              | Min value length        |
+|`required`      |**boolean**              | Not empty value         |
 
 ---
 
@@ -107,18 +107,72 @@ messages: {
 ```
 
 
-## API
+## Advanced
 ### ``vanillaValidation``(``Form``, ``Options``)
 
 **Form**
 > Type: **DOM Element**
+>
 > The form DOM element
 
 **Options**
 > Type: **Object**
+>
 > Object with configuration, rules and custom error messages
 
 
+## ``options``:
+
+### Events:
+
+**onfocusout** (default: **false**)
+> Type: **Boolean**
+>
+> If true, make field validation on the **onfocusout** event trigger.
+
+### Handlers:
+
+**errorPlacement**
+> Type: **Function**
+>
+> After a submit with errors, the **errorPlacement** is called for every field with an error. The function will receive 2 params, the **error** (An object with the error type and the message) and the **input** (The node of the input with error).
+
+```javascript
+{ // options object
+  errorPlacement: function (error, input) {
+    console.log(error); // { rule: exempleRule, message: 'The field has a exempleRule error' }
+    console.log(field); // <input name="exemple" type="text" />
+  }
+}
+```
+
+**invalidHandler**
+> Type: **Function**
+>
+> Called on submit if form has a error. The function receives one param: the **validator** with the instance object of vanillajs-validation;
+
+```javascript
+{
+  invalidHandler: function (validator) {
+    console.log(validator); // Validator instance object
+  }
+}
+```
+
+**submitHandler**
+> Type: **Function**
+>
+> Called on submit instead of default form submit. The function receives one param: the **form** with the node reference to form;
+
+```javascript
+{
+  submitHandler: function (form) {
+    console.log(form); // <form data-form> ... </form>
+  }
+}
+```
+
+**
 
 ## Contribute
 

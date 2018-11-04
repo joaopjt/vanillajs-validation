@@ -154,6 +154,8 @@ export default class VanillaValidator {
       } else {
         e.currentTarget.submit();
       }
+    } else {
+      if (this.invalidHandler) this.invalidHandler.call(this, this);
     }
   }
 
@@ -215,8 +217,6 @@ export default class VanillaValidator {
             required: r[1],
             inputIndex: index,
           });
-
-          if (this.invalidHandler) this.invalidHandler.call(this, this);
         }
       } else {
         if (errorInList >= 0) {
