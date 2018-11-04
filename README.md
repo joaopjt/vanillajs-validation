@@ -130,6 +130,12 @@ messages: {
 >
 > If true, make field validation on the **onfocusout** event trigger.
 
+```javascript
+{ // options object
+  onfocusout: false
+}
+```
+
 ### Handlers:
 
 **errorPlacement**
@@ -152,7 +158,7 @@ messages: {
 > Called on submit if form has a error. The function receives one param: the **validator** with the instance object of vanillajs-validation;
 
 ```javascript
-{
+{ // options object
   invalidHandler: function (validator) {
     console.log(validator); // Validator instance object
   }
@@ -165,7 +171,7 @@ messages: {
 > Called on submit instead of default form submit. The function receives one param: the **form** with the node reference to form;
 
 ```javascript
-{
+{ // options object
   submitHandler: function (form) {
     console.log(form); // <form data-form> ... </form>
   }
