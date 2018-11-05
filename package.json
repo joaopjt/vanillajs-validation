@@ -1,8 +1,8 @@
 {
   "name": "vanillajs-validation",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Vanilla JS Form validation solution.",
-  "main": "dist/index.js",
+  "main": "dist/index.min.js",
   "repository": "https://github.com/joaopjt/vanilla-validation.git",
   "author": "João Julio",
   "license": "MIT",
