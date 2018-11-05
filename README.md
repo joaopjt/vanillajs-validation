@@ -1,4 +1,3 @@
-
 # Vanilla Validation
 
 A lightweight validation form inspired in [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
