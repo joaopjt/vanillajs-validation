@@ -57,7 +57,7 @@ export default class VanillaValidator {
       const input = this.formInputs[i];
 
       this.removeErrorClass(input.holder);
-      this.removeErrorMessage(input.errField);
+      VanillaValidator.removeErrorMessage(input.errField);
       this.errorList.splice(errorItem, 1);
     }
   }
