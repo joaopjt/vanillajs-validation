@@ -1,8 +1,8 @@
 import babel from 'rollup-plugin-babel';
 import minify from 'rollup-plugin-babel-minify';
-import { uglify } from 'rollup-plugin-uglify';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import { uglify } from 'rollup-plugin-uglify';
 
 const babelConfig = { exclude: 'node_modules/**' };
 const minifyConfig = { comments: false };
