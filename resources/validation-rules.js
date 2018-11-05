@@ -2,6 +2,11 @@
 import cpf from './rules/cpf';
 import cnpj from './rules/cnpj';
 
+/**
+ * The follow functions will receive 2 params:
+ * @param {[string, integer, float]} v [The input value]
+ * @param {[string, integer, float]} r [The rule param value]
+ */
 export default {
   cep(v) {
     const regex = /^[0-9]{5}(?:-[0-9]{3})?$/;

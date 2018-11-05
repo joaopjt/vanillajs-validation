@@ -4,6 +4,57 @@
   </head>
   <body>
     <h1>Vanilla Validation Test</h1>
+
+    <div style="display: block; margin: 20px auto; max-width: 450px;">
+      <form data-form>
+        <div data-field-holder>
+          <input name="testfield" placeholder="Name" />
+          <span data-field-error></span>
+        </div>
+        <div data-field-holder>
+          <input name="cpf" placeholder="000.000.000-00" />
+          <span data-field-error></span>
+        </div>
+        <div data-field-holder>
+          <input name="test" placeholder="The value should be equal to 'batata'." />
+          <span data-field-error></span>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+
   </body>
   <script src="vanillajs-validation.min.js"></script>
+  <script>
+    var form = document.querySelector('[data-form]');
+    var v = new vanillaValidation(form, {
+      rules: {
+        testfield: {
+          minlength: 2,
+          required: true
+        },
+        cpf: {
+          cpf: true,
+          required: true
+        },
+        test: {
+          valueIs: "batata"
+        }
+      },
+      messages: {
+        testfield: {
+          minlength: 'O campo precisa de pelo menos 2 caracteres',
+          required: 'Campo teste obrigatorio!'
+        },
+        test: {
+          valueIs: 'O valor é diferente de "Batata".'
+        }
+      }
+    });
+
+    v.addCustomRule('valueIs', function (inputValue, ruleValue) {
+      return inputValue === ruleValue;
+    });
+  </script>
 </html>
