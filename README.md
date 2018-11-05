@@ -1,4 +1,3 @@
-
 # Vanilla Validation
 
 A lightweight validation form inspired in [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
@@ -21,11 +20,15 @@ npm install vanillajs-validation
 ```html
 <form data-form>
   <div data-field-holder>
-    <input name="testfield" />
+    <input name="firstfield" />
     <span data-field-error></span>
   </div>
-  <div data-input-holder>
+  <div data-field-holder>
     <input name="cpf" />
+    <span data-field-error></span>
+  </div>
+  <div data-field-holder>
+    <input name="test" />
     <span data-field-error></span>
   </div>
 </form>
@@ -33,25 +36,36 @@ npm install vanillajs-validation
 
 <script src="vanillajs-validation.min.js"></script> // Import downloaded script file
 <script type="text/javascript">
-var form = document.querySelector('[data-form]');
-var v = new vanillaValidation(form, {
-  rules: {
-    testfield: {
-      minlength: 2,
-      required: true
+  var form = document.querySelector('[data-form]');
+  var v = new vanillaValidation(form, {
+    customRules: {
+      valueIs: function (inputValue, ruleValue) {
+        return inputValue === ruleValue;
+      },
     },
-    cpf: {
-      cpf: true,
-      required: true
+    rules: {
+      firstfield: {
+        minlength: 2,
+        required: true
+      },
+      cpf: {
+        cpf: true,
+        required: true
+      },
+      test: {
+        valueIs: 'customRuleTest'
+      }
+    },
+    messages: {
+      firstfield: {
+        minlength: 'This input should have at least 2 characters.',
+        required: 'Input value required!'
+      },
+      test: {
+        valueIs: 'The field value must be "customRuleTest".'
+      }
     }
-  },
-  messages: {
-    testfield: {
-      minlength: 'O campo precisa de pelo menos 2 caracteres',
-      required: 'Campo teste obrigatorio!'
-    }
-  }
-});
+  });
 </script>
 ```
 
@@ -120,6 +134,58 @@ messages: {
 >
 > Object with configuration, rules and custom error messages
 
+### ``.addCustomRule``(``customRuleName``, ``customRuleFunction``)
+
+**customRuleName**
+> Type: **String**
+>
+> Name of the custom rule.
+
+**customRuleFunction**
+> Type: **Function**
+>
+> The function with the input validation flow. This function will receive 2 params, the **inputValue** and the **ruleValue**. Exemple:
+
+```javascript
+  var v = new Validate(form, {
+    rules: {
+      testField: {
+        valueIs: "customRuleTutorial"
+      }
+    },
+    messages: {
+      testField: {
+        valueIs: "The value should be 'customRuleTutorial'."
+      }
+    }
+  });
+
+  v.addCustomRule('valueIs', function(inputValue, ruleValue) {
+    return inputValue === ruleValue;
+  });
+```
+
+> You can add a **customRules** object in **options** when creating the instance too. See the exemple bellow:
+
+```javascript
+  var v = new Validate(form, { // options
+    customRules: {
+      valueIs: function (inputValue, ruleValue) {
+        return inputValue === ruleValue;
+      }
+    },
+    rules: {
+      testField: {
+        valueIs: "customRuleTutorial"
+      }
+    },
+    messages: {
+      testField: {
+        valueIs: "The value should be 'customRuleTutorial'."
+      }
+    }
+  });
+```
 
 ## ``options``:
 
@@ -174,6 +240,30 @@ messages: {
 { // options object
   submitHandler: function (form) {
     console.log(form); // <form data-form> ... </form>
+  }
+}
+```
+
+### Others:
+
+**customRules**
+> Type: **Object**
+>
+> This object can receive new custom rules. The function of custom rule receive two params: **inputValue** with the input value and the **ruleValue**, with rule value
+
+```javascript
+{ // options object
+  customRules: {
+    valueIs: function (inputValue, ruleValue) {
+      // Verify if input value is 'ruleValueHere',
+      // or other value write bellow, in 'rules' for 'exempleInput' key.      
+      return inputValue === ruleValue; 
+    }
+  },
+  rules: {
+    exempleInput: {
+      valueIs: 'ruleValueHere'
+    }
   }
 }
 ```

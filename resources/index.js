@@ -6,6 +6,7 @@ export default class VanillaValidator {
   constructor(form, options) {
     this.form = form;
     this.formInputs = [];
+    this.customRules = (options.customRules) ? options.customRules : {};
     this.rules = (options.rules) ? options.rules : {};
     this.errorList = [];
     this.errorClass = (options.errorClass) ? options.errorClass : 'invalid';
@@ -24,7 +25,22 @@ export default class VanillaValidator {
   }
 
   /**
-   * @param {Node}
+   * Add a custom rule to Validator instance
+   * @param {string} n [Custom rule name]
+   * @param {[type]} f [Custom rule function]
+   */
+  addCustomRule(n, f) {
+    if (!this.customRules[n]) {
+      if (typeof f !== "function") {
+        throw new Error('The second param to "addCustomRule" should be a function!');
+      } else {
+        this.customRules[n] = f;
+      }
+    }
+  }
+
+  /**
+   * @param {Node} holder [Receive the input holder element Node]
    */
   addErrorClass(holder) {
     if (!holder.classList.contains(this.errorClass)) {
@@ -33,8 +49,8 @@ export default class VanillaValidator {
   }
 
   /**
-   * @param {Object}
-   * @param {Object}
+   * @param {Object} input
+   * @param {Object} err
    */
   addErrorMessage(input, err) {
     const { errField } = input;
@@ -241,7 +257,13 @@ export default class VanillaValidator {
    * @return {boolean}
    */
   validateValue(v, r, rv) {
-    return validationRules[r].call(this, v, rv);
+    if (validationRules[r]) {
+      return validationRules[r].call(this, v, rv);
+    } else if (this.customRules[r]) {
+      return this.customRules[r].call(this, v, rv);
+    } else {
+      throw new Error('Undefined rule ' + r + '.');
+    }
   }
 
   validate() {
