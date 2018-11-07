@@ -1,7 +1,8 @@
 {
   "name": "vanillajs-validation",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Vanilla JS Form validation solution.",
+  "keywords": ["form", "validation", "validator", "lightweight", "vanilla js"],
   "main": "dist/index.min.js",
   "repository": "https://github.com/joaopjt/vanilla-validation.git",
   "author": "João Julio",
