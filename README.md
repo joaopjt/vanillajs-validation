@@ -218,6 +218,21 @@ messages: {
 }
 ```
 
+**beforeErrorPlacement**
+> Type: **Function**
+>
+> This will be called only if the **errorPlacement** has been defined.
+> With personalized **errorPlacement**, you will need to clean the personalized error fields. This handler is exactly for resolve this issue.
+> A param with validator instance is retorned to the handler function. See bellow:
+
+```javascript
+{ // options object
+  beforeErrorPlacement: function (validator) {
+    ... // Do the clear personalized input error fields
+  }
+}
+```
+
 **invalidHandler**
 > Type: **Function**
 >
