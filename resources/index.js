@@ -69,12 +69,9 @@ export default class VanillaValidator {
    */
   clearError(i, r) {
     const errorItem = _.findIndex(this.errorList, { rule: r, inputIndex: i });
-    console.log('clear error called');
-    console.log(errorItem);
-
+    
     if (typeof errorItem === 'number') {
       const input = this.formInputs[i];
-      console.log(input);
 
       this.removeErrorClass(input.holder);
       VanillaValidator.removeErrorMessage(input.errField);
