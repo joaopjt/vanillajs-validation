@@ -28,7 +28,7 @@
   <script src="vanillajs-validation.min.js"></script>
   <script>
     var form = document.querySelector('[data-form]');
-    var v = new vanillaValidation(form, {
+    window.v = new vanillaValidation(form, {
       rules: {
         testfield: {
           minlength: 2,
