@@ -12,6 +12,7 @@ export default class VanillaValidator {
     this.errorClass = (options.errorClass) ? options.errorClass : 'invalid';
     this.messages = (options.messages) ? options.messages : {};
     this.onfocusout = (options.onfocusout) ? options.onfocusout : null;
+    this.beforeErrorPlacement = (options.beforeErrorPlacement) ? options.beforeErrorPlacement : null;
     this.errorPlacement = (options.errorPlacement) ? options.errorPlacement : null;
     this.submitHandler = (options.submitHandler) ? options.submitHandler : null;
     this.invalidHandler = (options.invalidHandler) ? options.invalidHandler : null;
@@ -68,9 +69,12 @@ export default class VanillaValidator {
    */
   clearError(i, r) {
     const errorItem = _.findIndex(this.errorList, { rule: r, inputIndex: i });
+    console.log('clear error called');
+    console.log(errorItem);
 
     if (typeof errorItem === 'number') {
       const input = this.formInputs[i];
+      console.log(input);
 
       this.removeErrorClass(input.holder);
       VanillaValidator.removeErrorMessage(input.errField);
@@ -153,6 +157,10 @@ export default class VanillaValidator {
       }
     });
 
+    if (this.beforeErrorPlacement) {
+      this.beforeErrorPlacement.call(this, this);
+    }
+
     errors.forEach((err) => {
       this.errorPlacement.call(this, this.getError(err), err.el);
     });
@@ -204,6 +212,8 @@ export default class VanillaValidator {
   validateInput(el, i, cb) {
     let input = el;
     let index = i;
+
+    console.log('validating input');
 
     if (!i && typeof i !== 'number') {
       const ind = _.findIndex(this.formInputs, { el: input });
