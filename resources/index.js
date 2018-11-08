@@ -210,8 +210,6 @@ export default class VanillaValidator {
     let input = el;
     let index = i;
 
-    console.log('validating input');
-
     if (!i && typeof i !== 'number') {
       const ind = _.findIndex(this.formInputs, { el: input });
 
