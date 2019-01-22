@@ -2,7 +2,7 @@
 
 A lightweight validation form inspired in [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
 
-⚡️ ~ 24kb in browser only. As a project dependency, it falls to 6kb only.
+⚡️ 24kb in browser only. As a project dependency, it falls to 6kb only.
 
 ## Getting Started
 
