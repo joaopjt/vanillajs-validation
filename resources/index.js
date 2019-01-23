@@ -111,7 +111,7 @@ export default class VanillaValidator {
     const self = this;
 
     Array.from(this.form.querySelectorAll(this.fieldHolderSelector)).forEach((h) => {
-      const el = h.querySelector('input:not([disabled])');
+      const el = h.querySelector('input:not([disabled])') || h.querySelector('textarea:not([disabled])');
 
       if (el && this.rules[el.name]) {
         const inputInfo = {
