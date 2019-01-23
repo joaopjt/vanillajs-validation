@@ -221,7 +221,7 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 { // options object
   errorPlacement: function (error, input) {
     console.log(error); // { rule: exempleRule, message: 'The field has a exempleRule error' }
-    console.log(field); // <input name="exemple" type="text" />
+    console.log(input); // <input name="exemple" type="text" />
   }
 }
 ```
@@ -257,11 +257,11 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 **submitHandler**
 > Type: **Function**
 >
-> Called on submit instead of default form submit. The function receives one param: the **form** with the node reference to form;
+> Called after the form is validated, this handler should do the ajax request that you need instead of the default form browser submission. The function receives three params: the **event**, the **form** (node reference) and the **validator** instance object;
 
 ```javascript
 { // options object
-  submitHandler: function (form) {
+  submitHandler: function (event, form, validator) {
     console.log(form); // <form data-form> ... </form>
   }
 }
