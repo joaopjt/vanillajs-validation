@@ -43,11 +43,13 @@ export default class VanillaValidator {
   }
 
   /**
-   * @param {Node} holder [Receive the input holder element Node]
+   * @param DOM holder [Receive the input holder Node element]
+   * @param DOM input [Receive the input Node element]
    */
-  addErrorClass(holder) {
+  addError(holder, input) {
     if (!holder.classList.contains(this.errorClass)) {
       holder.classList.add(this.errorClass);
+      input.setAttribute('aria-invalid', 'true');
     }
   }
 
@@ -75,7 +77,7 @@ export default class VanillaValidator {
     if (typeof errorItem === 'number') {
       const input = this.formInputs[i];
 
-      this.removeErrorClass(input.holder);
+      this.removeError(input.holder, input.el);
       VanillaValidator.removeErrorMessage(input.errField);
       this.errorList.splice(errorItem, 1);
     }
@@ -129,9 +131,9 @@ export default class VanillaValidator {
     if (!this.errorPlacement) {
       this.errorList.forEach((err) => {
         const input = this.formInputs[err.inputIndex];
-        const { holder } = input;
+        const { el, holder } = input;
 
-        this.addErrorClass(holder);
+        this.addError(holder, el);
         this.addErrorMessage(input, err);
       });
     } else {
@@ -187,16 +189,18 @@ export default class VanillaValidator {
   }
 
   /**
-   * @param  {Node}
+   * @param DOM holder [The input holder Node element]
+   * @param DOM input [The input Node element]
    */
-  removeErrorClass(elHolder) {
-    if (elHolder.classList.contains(this.errorClass)) {
-      elHolder.classList.remove(this.errorClass);
+  removeError(holder, input) {
+    if (holder.classList.contains(this.errorClass)) {
+      input.setAttribute('aria-invalid', 'false');
+      holder.classList.remove(this.errorClass);
     }
   }
 
   /**
-   * @param  {Node}
+   * @param DOM errorSpan
    */
   static removeErrorMessage(errorSpan) {
     const span = errorSpan;
@@ -295,7 +299,7 @@ export default class VanillaValidator {
   setupListeners(evt) {
     const self = this;
 
-    Array.from(this.form.querySelectorAll('[data-field-holder]')).forEach((h) => {
+    Array.from(this.form.querySelectorAll(this.fieldHolderSelector)).forEach((h) => {
       const el = h.querySelector('input:not([disabled])');
       const mapped = _.findIndex(this.formInputs, { el });
 
