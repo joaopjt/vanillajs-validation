@@ -291,6 +291,26 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 }
 ```
 
+**destroy**
+> Type: **Function**
+>
+> Remove errors, the validator and left the clean instance.
+
+```javascript
+const formValidation = new Validator(...);
+
+formValidation.destroy();
+```
+
+**init**
+> Type: **Function**
+>
+> If you want to init an destroyed instance, use this method.
+
+```javascript
+formValidation.init();
+```
+
 **submitEventIntercept**
 > Type: **function**
 >

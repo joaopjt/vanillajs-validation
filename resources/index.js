@@ -18,13 +18,14 @@ export default class VanillaValidator {
     this.errorPlacement = (options.errorPlacement) ? options.errorPlacement : null;
     this.submitHandler = (options.submitHandler) ? options.submitHandler : null;
     this.invalidHandler = (options.invalidHandler) ? options.invalidHandler : null;
+    this.submitListenerHandler = this.onSubmit.bind(this);
 
     if (!this.rules) {
       this.setupRules();
     }
 
     this.listInputs();
-    this.setup();
+    this.init();
   }
 
   /**
@@ -81,6 +82,33 @@ export default class VanillaValidator {
       VanillaValidator.removeErrorMessage(input.errField);
       this.errorList.splice(errorItem, 1);
     }
+  }
+
+  clearErrors() {
+    if (!this.errorPlacement) {
+      this.errorList.forEach((err) => {
+        const input = this.formInputs[err.inputIndex];
+        const { el, holder } = input;
+
+        this.removeError(holder, el);
+        VanillaValidator.removeErrorMessage(input.errField);
+      });
+    }
+
+    this.errorList = [];
+  }
+
+  /**
+   * Destroy validator instance
+   * @return void
+   */
+  destroy() {
+    this.form.removeEventListener('submit', this.submitListenerHandler);
+
+    this.clearErrors();
+    this.formInputs = [];
+
+    return null;
   }
 
   /**
@@ -313,8 +341,8 @@ export default class VanillaValidator {
     });
   }
 
-  setup() {
-    this.form.addEventListener('submit', this.onSubmit.bind(this));
+  init() {
+    this.form.addEventListener('submit', this.submitListenerHandler);
 
     if (this.onfocusout) {
       this.setupListeners('focusout');
