@@ -221,7 +221,7 @@ const formValidation = new Validator(document.querySelector('[data-form]', {
 { // options object
   errorPlacement: function (error, input) {
     console.log(error); // { rule: exempleRule, message: 'The field has a exempleRule error' }
-    console.log(field); // <input name="exemple" type="text" />
+    console.log(input); // <input name="exemple" type="text" />
   }
 }
 ```
