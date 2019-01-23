@@ -120,6 +120,14 @@ messages: {
 }
 ```
 
+### Custom Field Holder Selector
+You can change the default field holder selector (``[data-field-holder]``) adding the key ``fieldHolderSelector`` in ``options`` at the follow format:
+
+```javascript
+const formValidation = new Validator(document.querySelector('[data-form]', {
+  fieldHolderSelector: '.field-holder'
+});
+```
 
 ## Advanced
 ### ``vanillaValidation``(``Form``, ``Options``)
@@ -279,6 +287,20 @@ messages: {
     exempleInput: {
       valueIs: 'ruleValueHere'
     }
+  }
+}
+```
+
+**submitEventIntercept**
+> Type: **function**
+>
+> A function called on the first submit form event trigger, before the form validation and handlers call. It returns the submit **event** and the **validator** as params
+
+```javascript
+{ // options object
+  submitEventIntercept: function (e, v) {
+    e.stopImmediatePropagation(); // In case a second JS is listening to the submit event, you can use this to prevent the listener call
+    console.log(v); // Validator instance
   }
 }
 ```

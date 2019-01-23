@@ -7,6 +7,8 @@ export default class VanillaValidator {
     this.form = form;
     this.formInputs = [];
     this.customRules = (options.customRules) ? options.customRules : {};
+    this.submitEventIntercept = (options.submitEventIntercept) ? options.submitEventIntercept : null;
+    this.fieldHolderSelector = (options.fieldHolderSelector) ? options.fieldHolderSelector : '[data-field-holder]';
     this.rules = (options.rules) ? options.rules : {};
     this.errorList = [];
     this.errorClass = (options.errorClass) ? options.errorClass : 'invalid';
@@ -106,7 +108,7 @@ export default class VanillaValidator {
   listInputs() {
     const self = this;
 
-    Array.from(this.form.querySelectorAll('[data-field-holder]')).forEach((h) => {
+    Array.from(this.form.querySelectorAll(this.fieldHolderSelector)).forEach((h) => {
       const el = h.querySelector('input:not([disabled])');
 
       if (el && this.rules[el.name]) {
@@ -168,6 +170,10 @@ export default class VanillaValidator {
    */
   onSubmit(e) {
     e.preventDefault();
+
+    if (this.submitEventIntercept) {
+      this.submitEventIntercept.call(this, e, this);
+    }
 
     if (!this.validate().hasError) {
       if (this.submitHandler) {
