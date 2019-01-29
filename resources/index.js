@@ -231,11 +231,9 @@ export default class VanillaValidator {
    * @param DOM errorSpan
    */
   static removeErrorMessage(errorSpan) {
-    const span = errorSpan;
-
-    if (span.innerHTML && span.dataset.inputError) {
-      span.innerHTML = '';
-      span.dataset.inputError = '';
+    if (errorSpan && errorSpan.innerHTML && errorSpan.dataset.inputError) {
+      errorSpan.innerHTML = '';
+      errorSpan.dataset.inputError = '';
     }
   }
 
