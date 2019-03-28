@@ -7,6 +7,8 @@ export default class VanillaValidator {
     this.form = form;
     this.formInputs = [];
     this.customRules = (options.customRules) ? options.customRules : {};
+    this.defaultValidationMessages = defaultMessages;
+    this.defaultValidationHandlers = validationRules;
     this.submitEventIntercept = (options.submitEventIntercept) ? options.submitEventIntercept : null;
     this.fieldHolderSelector = (options.fieldHolderSelector) ? options.fieldHolderSelector : '[data-field-holder]';
     this.rules = (options.rules) ? options.rules : {};
@@ -345,5 +347,14 @@ export default class VanillaValidator {
     if (this.onfocusout) {
       this.setupListeners('focusout');
     }
+
+    if (this.onkeypress) {
+      this.setupListeners('keypress');
+    }
   }
+}
+
+export {
+  defaultMessages,
+  validationRules
 }
