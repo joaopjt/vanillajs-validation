@@ -1,63 +1,56 @@
 /* eslint-disable */
-// Blacklist common values.
-const BLACKLIST = [
-  "00000000000000",
-  "11111111111111",
-  "22222222222222",
-  "33333333333333",
-  "44444444444444",
-  "55555555555555",
-  "66666666666666",
-  "77777777777777",
-  "88888888888888",
-  "99999999999999"
-];
-
-const STRICT_STRIP_REGEX = /[-\/.]/g;
-const LOOSE_STRIP_REGEX = /[^\d]/g;
-
-function verifierDigit(numbers) {
-  let index = 2;
-  const reverse = numbers.split("").reduce(function(buffer, number) {
-    return [parseInt(number, 10)].concat(buffer);
-  }, []);
-
-  const sum = reverse.reduce(function(buffer, number) {
-    buffer += number * index;
-    index = (index === 9 ? 2 : index + 1);
-    return buffer;
-  }, 0);
-
-  const mod = sum % 11;
-  return (mod < 2 ? 0 : 11 - mod);
-}
-
-function format(number) {
-  return strip(number).replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-}
-
-function strip(number, strict) {
-  const regex = strict ? STRICT_STRIP_REGEX : LOOSE_STRIP_REGEX;
-  return (number || "").toString().replace(regex, "");
-}
 
 export default {
-  isValid(number, strict) {
-    const stripped = strip(number, strict);
+  isValid(cnpj) {
+    cnpj = cnpj.replace(/[^\d]+/g,'');
+ 
+    if (cnpj == '') return false;
+     
+    if (cnpj.length != 14)
+        return false;
+ 
+    // Elimina CNPJs invalidos conhecidos
+    if (cnpj == "00000000000000" || 
+        cnpj == "11111111111111" || 
+        cnpj == "22222222222222" || 
+        cnpj == "33333333333333" || 
+        cnpj == "44444444444444" || 
+        cnpj == "55555555555555" || 
+        cnpj == "66666666666666" || 
+        cnpj == "77777777777777" || 
+        cnpj == "88888888888888" || 
+        cnpj == "99999999999999")
+        return false;
+         
+    // Valida DVs
+    let tamanho = cnpj.length - 2
+    let numeros = cnpj.substring(0,tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
 
-    // CNPJ must be defined
-    if (!stripped) { return false; }
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
 
-    // CNPJ must have 14 chars
-    if (stripped.length !== 14) { return false; }
+    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
 
-    // CNPJ can't be blacklisted
-    if (BLACKLIST.includes(stripped)) { return false; }
+    if (resultado != digitos.charAt(0)) return false;
+         
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0,tamanho);
+    soma = 0;
+    pos = tamanho - 7;
 
-    let numbers = stripped.substr(0, 12);
-    numbers += verifierDigit(numbers);
-    numbers += verifierDigit(numbers);
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
 
-    return numbers.substr(-2) === stripped.substr(-2);
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+    if (resultado != digitos.charAt(1)) return false;
+    return true;  
   }
 }

@@ -13,14 +13,37 @@ const blackList = [
   '99999999999',
 ];
 
-const verifierDigit = digits => {
-  const size = digits.length + 1;
-  const mod11 = digits
-    .map((digit, index) => digit * (size - index))
-    .reduce((a, b) => a + b) % 11;
+const verify = cpf => {
+  var nums, digitos, soma, i, resultado, equalDigits;
+  equalDigits = 1;
 
-  return mod11 <= 1 ? 0 : 11 - mod11;
-};
+  for (i = 0; i < cpf.length - 1; i++)
+    if (cpf.charAt(i) != cpf.charAt(i + 1)) {
+      equalDigits = 0;
+      break;
+    }
+
+  if (!equalDigits) {
+    nums = cpf.substring(0,9);
+    digitos = cpf.substring(9);
+    soma = 0;
+    for (i = 10; i > 1; i--)
+          soma += nums.charAt(10 - i) * i;
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(0))
+          return false;
+    nums = cpf.substring(0,10);
+    soma = 0;
+    for (i = 11; i > 1; i--)
+          soma += nums.charAt(11 - i) * i;
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(1))
+          return false;
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export default {
   isValid(v) {
@@ -28,13 +51,6 @@ export default {
 
     if (number.length != 11 || blackList.includes(number)) return false;
 
-    const digits = number.split("").map(digit => parseInt(digit, 10));
-    const cpfDigits = digits.slice(0, 9);
-    let vDigits = digits.slice(9, 2);
-
-    const v1 = verifierDigit(cpfDigits);
-    const v2 = verifierDigit([...cpfDigits, v1]);
-
-    return [v1, v2].join == vDigits.join;
+    return verify(number);
   }
 }

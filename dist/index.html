@@ -16,6 +16,10 @@
           <span data-field-error></span>
         </div>
         <div data-field-holder>
+          <input name="cnpj" placeholder="CNPJ" />
+          <span data-field-error></span>
+        </div>
+        <div data-field-holder>
           <textarea name="test" placeholder="The value should be equal to 'batata'."></textarea>
           <span data-field-error></span>
         </div>
@@ -36,6 +40,10 @@
         },
         cpf: {
           cpf: true,
+          required: true
+        },
+        cnpj: {
+          cnpj: true,
           required: true
         },
         test: {
