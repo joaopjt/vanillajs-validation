@@ -1,6 +1,6 @@
 {
   "name": "vanillajs-validation",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "Vanilla JS Form validation solution.",
   "keywords": ["form", "validation", "validator", "lightweight", "vanilla js"],
   "main": "dist/index.min.js",

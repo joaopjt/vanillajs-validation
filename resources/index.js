@@ -2,13 +2,16 @@ import _ from 'underscore';
 import defaultMessages from './default-messages';
 import validationRules from './validation-rules';
 
+let vjsvmsg = defaultMessages;
+let vjsvrls = validationRules;
+
 export default class VanillaValidator {
   constructor(form, options) {
     this.form = form;
     this.formInputs = [];
     this.customRules = (options.customRules) ? options.customRules : {};
-    this.defaultValidationMessages = defaultMessages;
-    this.defaultValidationHandlers = validationRules;
+    this.validationMessages = vjsvmsg;
+    this.validationHandlers = vjsvrls;
     this.submitEventIntercept = (options.submitEventIntercept) ? options.submitEventIntercept : null;
     this.fieldHolderSelector = (options.fieldHolderSelector) ? options.fieldHolderSelector : '[data-field-holder]';
     this.rules = (options.rules) ? options.rules : {};
@@ -41,6 +44,21 @@ export default class VanillaValidator {
         throw new Error('The second param to "addCustomRule" should be a function!');
       } else {
         this.customRules[n] = f;
+      }
+    }
+  }
+
+  /**
+   * Add a custom rule to Validator instance
+   * @param {string} r [Custom rule name]
+   * @param {string/function} m [Custom message]
+   */
+  addCustomRuleMessage(r, m) {
+    if (!this.validationMessages[r]) {
+      if (typeof m === "string" || typeof m === "function") {
+        this.validationMessages[r] = m;
+      } else {
+        throw new Error('The second param to "addCustomRuleMessage" should be a string or a function!');
       }
     }
   }
@@ -120,10 +138,10 @@ export default class VanillaValidator {
   getError(err) {
     const error = { rule: err.rule };
 
-    if (typeof defaultMessages[err.rule] === 'function') {
-      error.message = defaultMessages[err.rule](err.required);
+    if (typeof this.validationMessages[err.rule] === 'function') {
+      error.message = this.validationMessages[err.rule](err.required);
     } else {
-      error.message = defaultMessages[err.rule];
+      error.message = this.validationMessages[err.rule];
     }
 
     if (this.messages) {
@@ -300,8 +318,8 @@ export default class VanillaValidator {
    * @return {boolean}
    */
   validateValue(v, r, rv) {
-    if (validationRules[r]) {
-      return validationRules[r].call(this, v, rv);
+    if (this.validationHandlers[r]) {
+      return this.validationHandlers[r].call(this, v, rv);
     } else if (this.customRules[r]) {
       return this.customRules[r].call(this, v, rv);
     } else {

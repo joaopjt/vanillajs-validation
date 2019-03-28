@@ -46,9 +46,6 @@
         testfield: {
           minlength: 'O campo precisa de pelo menos 2 caracteres',
           required: 'Campo teste obrigatorio!'
-        },
-        test: {
-          valueIs: 'O valor é diferente de "Batata".'
         }
       }
     });
@@ -56,5 +53,7 @@
     v.addCustomRule('valueIs', function (inputValue, ruleValue) {
       return inputValue === ruleValue;
     });
+
+    v.addCustomRuleMessage('valueIs', 'O valor é diferente de "batata".');
   </script>
 </html>
