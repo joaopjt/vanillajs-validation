@@ -1,6 +1,6 @@
-# Vanilla Validation
+# VanillaJS Validation
 
-A lightweight validation form that replace [Jquery Validation](https://jqueryvalidation.org) (Still under coding).
+A lightweight validation form that replace [Jquery Validation](https://jqueryvalidation.org).
 
 ⚡️ 24kb in browser only. As a project dependency, it falls to 6kb only.
 
