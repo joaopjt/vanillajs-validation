@@ -339,8 +339,3 @@ Then, make a pull request with a nice description of changes.
 ## License
 
 [MIT License](https://opensource.org/licenses/MIT).
-
-## Made with ❤️ by
-- [João Julio](http://github.com/joaopjt)
-
-> be a part of this list too, contribute with us :)
